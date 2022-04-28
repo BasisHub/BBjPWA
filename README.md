@@ -23,7 +23,7 @@ bbj-pwa /bbj/htdocs/output pwa-name -sw -s
 
 ```
 Arguments:
-  output                           The output directory whee the files will be generated.
+  output                           The output directory where the files will be generated.
   program-name                     The program name as registered in the Enterprise Manager
 
 Options:

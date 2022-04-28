@@ -15,7 +15,7 @@ const getDefaultName = programName => programName.replace(/\s/g, '');
 const getDefaultDescription = programName => programName.replace(/\s/g, '') + " PWA";
 
 const translation = {
-  output: 'The output directory whee the files will be generated.',
+  output: 'The output directory where the files will be generated.',
   programName: 'The program name as registered in the Enterprise Manager',
   name: 'The name of the web application as it is usually displayed to the user',
   shortName: 'The name of the web application displayed to the user if there is not enough space to display name',
@@ -23,7 +23,7 @@ const translation = {
   themeColor: 'A string that defines the default theme color for the application. This sometimes affects how the OS displays the site',
   backgroundColor: 'A placeholder background color for the application page to display before its stylesheet is loaded. This value is used by the user agent to draw the background color of a shortcut when the manifest is available before the stylesheet has loaded.',
   icon: 'An image file that can serve as application icon for different contexts.',
-  silent: 'Run the generate command in silent mode but',
+  silent: 'Run the generate command in silent mode',
   serviceWorker: 'Generate a service worker for the application',
   manifestExists: 'The manifest.json file already exists in the output directory , do you want to merge the new updates ?',
   indexExists: 'The index.html file already exists in the output directory , do you want to overwrite it ?',
