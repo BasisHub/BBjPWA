@@ -1,0 +1,20 @@
+{
+  "name": "bbj-pwa",
+  "version": "0.0.1",
+  "description": "BBj PWA Generator",
+  "author": "Hyyan Abo Fakher",
+  "license": "MIT",
+  "bin": {
+    "bbj-pwa": "./cli.js"
+  },
+  "dependencies": {
+    "commander": "^9.2.0",
+    "inquirer": "^8.2.2",
+    "inquirer-file-tree-selection-prompt": "^1.0.19",
+    "lodash": "^4.17.21",
+    "pwa-asset-generator": "^6.0.8",
+    "workbox-build": "^6.5.3",
+    "chalk": "^4.1.2",
+    "fs-extra": "^10.1.0"
+  }
+}
