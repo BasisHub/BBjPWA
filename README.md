@@ -9,11 +9,15 @@ You will need the following things properly installed on your computer.
 * [Node.js](http://nodejs.org/) (with NPM)
 * [NPM](https://www.npmjs.com/get-npm)
 
-`npm install -g BasisHub/BBjPWA`
+```
+npm install -g BasisHub/BBjPWA
+```
 
 ## Usage
 
-`bbj-pwa /bbj/htdocs/output pwa-name -sw -s`
+```
+bbj-pwa /bbj/htdocs/output pwa-name -sw -s
+```
 
 ## Interface 
 
