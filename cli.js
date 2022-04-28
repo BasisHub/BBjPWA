@@ -148,6 +148,7 @@ program
     // generate manifest
     const manifestInputPath = path.resolve(`${__dirname}/assets/manifest.json.tpl`);
     const manifestOutputPath = path.resolve(`${output}/manifest.json`);
+    fs.outputJsonSync(manifestOutputPath, {})
     let createManifest = true;
     let manifest = fs.readJsonSync(manifestOutputPath);
 
