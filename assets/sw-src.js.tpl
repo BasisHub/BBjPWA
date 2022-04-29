@@ -10,7 +10,7 @@ workbox.recipes.staticResourceCache()
 workbox.recipes.imageCache()
 
 workbox.routing.registerRoute(new workbox.routing.Route(({ request }) => {
-  return request.mode === 'navigate' || request.url.includes('webapprmi');
+  return request.mode === 'navigate'
 }, new workbox.strategies.NetworkOnly({
   plugins: [
     new workbox.precaching.PrecacheFallbackPlugin({
