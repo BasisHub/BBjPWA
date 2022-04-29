@@ -13,6 +13,14 @@ You will need the following things properly installed on your computer.
 npm install -g BasisHub/BBjPWA
 ```
 
+## Configuration Enterprise Manager
+
+In the enterprise manager you need to add the following custom header 
+for the `root` context.
+
+![2022-04-29 16_41_32-localhost_8888_bbjem_emapp](https://user-images.githubusercontent.com/4313420/165967424-f7c73701-57b0-4ded-8e86-0d1dd04127d9.png)
+
+
 ## Usage
 
 ```
