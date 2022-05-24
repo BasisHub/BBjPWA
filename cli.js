@@ -12,7 +12,7 @@ const workboxBuild = require("workbox-build");
 const placeholder = (text) => chalk.italic.gray(text) + "\n:";
 const success = (text) => console.log(chalk.green(text));
 const getDefaultName = programName => programName.replace(/\s/g, '');
-const getDefaultDescription = programName => programName.replace(/\s/g, '') + " PWA";
+const getDefaultDescription = programName => programName.replace(/\s/g, '') + " - PWA Application";
 
 const translation = {
   output: 'The output directory where the files will be generated.',
@@ -31,7 +31,7 @@ const translation = {
   serviceWorkerExists: 'The sw.js file already exists in the output directory , do you want to overwrite it ?',
 }
 
-const defaultAnswers = {
+let defaultAnswers = {
   programName: '',
   name: '',
   shortName: '',
@@ -122,23 +122,28 @@ program
   .option('-sw, --service-worker', translation.serviceWorker, false)
   .action(async (output, programName, options) => {
 
-    defaultAnswers.programName = programName;
-    let answers = { ...defaultAnswers };
+    defaultAnswers = {
+      ...defaultAnswers,
+      ...{
+        ...options,
+        ...{ programName }
+      }
+    };
+
+    let answers = defaultAnswers;
 
     if (options.silent) {
       if (!options.hasOwnProperty('name')) {
-        defaultAnswers.name = options.name = getDefaultName(programName)
+        defaultAnswers.name = getDefaultName(programName)
       }
 
       if (!options.hasOwnProperty('shortName')) {
-        defaultAnswers.shortName = options.shortName = getDefaultName(programName)
+        defaultAnswers.shortName = getDefaultName(defaultAnswers.name || programName)
       }
 
       if (!options.hasOwnProperty('description')) {
-        defaultAnswers.description = options.description = getDefaultDescription(programName)
+        defaultAnswers.description = getDefaultDescription(defaultAnswers.name || programName)
       }
-
-      answers = { ...defaultAnswers };
     } else {
       const questions = _.omit(defaultQuestions, Object.keys(options));
       answers = { ...answers, ...await inquirer.prompt(Object.values(questions)) }
@@ -167,7 +172,7 @@ program
       fs.outputJsonSync(manifestOutputPath, {
         ...manifest,
         ...JSON.parse(manifestCompiled(answers))
-      },{
+      }, {
         spaces: ' '
       });
       success('generate manifest');
