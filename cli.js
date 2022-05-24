@@ -112,7 +112,6 @@ program
   .version('0.0.1')
   .argument('<output>', translation.output)
   .argument('<program-name>', translation.programName)
-  .option('-pn, --program-name <value>', translation.programName)
   .option('-n, --name <value>', translation.name)
   .option('-sn, --short-name <value>', translation.shortName)
   .option('-d, --description <value>', translation.description)
