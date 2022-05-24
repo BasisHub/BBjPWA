@@ -4,7 +4,7 @@ const fs = require('fs-extra');
 const path = require('path')
 const { program } = require('commander');
 const inquirer = require('inquirer');
-const inquirerFileTreeSelection = require('inquirer-file-tree-selection-prompt')
+// const inquirerFileTreeSelection = require('inquirer-file-tree-selection-prompt')
 const chalk = require('chalk');
 const pwaAssetGenerator = require("pwa-asset-generator");
 const workboxBuild = require("workbox-build");
@@ -90,16 +90,33 @@ const defaultQuestions = {
       return defaultAnswers.backgroundColor
     }
   },
+  // icon: {
+  //   type: 'file-tree-selection',
+  //   name: 'icon',
+  //   message: 'Choose your application icon\n',
+  //   suffix: placeholder(translation.icon),
+  //   enableGoUpperDirectory: true,
+  //   onlyShowValid: true,
+  //   root: os.homedir(),
+  //   validate: (input) => {
+  //     const ext = path.extname(input);
+  //     return fs.lstatSync(input).isDirectory()  || ['.png', '.jpg', '.jpeg'].indexOf(ext.toLocaleLowerCase()) !== -1;
+  //   },
+  //   default() {
+  //     return defaultAnswers.icon
+  //   }
+  // },
   icon: {
-    type: 'file-tree-selection',
+    type: 'input',
     name: 'icon',
-    message: 'Choose your application icon\n',
+    message: `The full path for your application icon ('.png', '.jpg', '.jpeg')\n`,
     suffix: placeholder(translation.icon),
-    enableGoUpperDirectory: true,
-    onlyShowValid: true,
-    root: __dirname,
     validate: (input) => {
-      return ['.png', '.jpg', '.jpeg'].indexOf(path.extname(input).toLocaleLowerCase()) !== -1;
+      const isValid = input &&
+        fs.lstatSync(input).isFile() &&
+        ['.png', '.jpg', '.jpeg'].indexOf(path.extname(input).toLocaleLowerCase()) !== -1;
+
+      return isValid || 'Please provide a valid image file';
     },
     default() {
       return defaultAnswers.icon
@@ -107,7 +124,7 @@ const defaultQuestions = {
   },
 };
 
-inquirer.registerPrompt('file-tree-selection', inquirerFileTreeSelection)
+// inquirer.registerPrompt('file-tree-selection', inquirerFileTreeSelection)
 program
   .version('0.0.1')
   .argument('<output>', translation.output)
