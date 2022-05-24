@@ -9,20 +9,29 @@ const chalk = require('chalk');
 const pwaAssetGenerator = require("pwa-asset-generator");
 const workboxBuild = require("workbox-build");
 
+const toBoolean = value => typeof value === 'boolean' ? value : ["yes", "true", "1", "on"].indexOf((value || '').toLocaleLowerCase()) !== -1;
 const placeholder = (text) => chalk.italic.gray(text) + "\n:";
 const success = (text) => console.log(chalk.green(text));
 const getDefaultName = programName => programName.replace(/\s/g, '');
 const getDefaultDescription = programName => programName.replace(/\s/g, '') + " - PWA Application";
 
 const translation = {
-  output: 'The output directory where the files will be generated.',
+  output: 'The output directory where the files will be generated',
   programName: 'The program name as registered in the Enterprise Manager',
   name: 'The name of the web application as it is usually displayed to the user',
   shortName: 'The name of the web application displayed to the user if there is not enough space to display name',
-  description: 'The description member is a string in which developers can explain what the application does.',
+  description: 'The description member is a string in which developers can explain what the application does',
   themeColor: 'A string that defines the default theme color for the application. This sometimes affects how the OS displays the site',
-  backgroundColor: 'A placeholder background color for the application page to display before its stylesheet is loaded. This value is used by the user agent to draw the background color of a shortcut when the manifest is available before the stylesheet has loaded.',
-  icon: 'An image file that can serve as application icon for different contexts.',
+  backgroundColor: 'A placeholder background color for the application page to display before its stylesheet is loaded. This value is used by the user agent to draw the background color of a shortcut when the manifest is available before the stylesheet has loaded',
+  icon: 'An image file that can serve as application icon for different contexts',
+  iconLandscapeOnly: 'Only generate landscape splash screens',
+  iconPortraitOnly: 'Only generate portrait splash screens',
+  iconQuality: 'Image quality: 0...100 (Only for JPG)',
+  iconFavicon: 'Generate favicon image and HTML meta tag',
+  iconMaskable: 'Declare icons in manifest file as maskable icons',
+  iconBackground: 'Page background to use when image source is provided (css value)',
+  iconOpaque: 'Shows white as canvas background and generates images without transparency',
+  iconPadding: 'Padding to use when image source provided (css value)',
   silent: 'Run the generate command in silent mode',
   serviceWorker: 'Generate a service worker for the application',
   manifestExists: 'The manifest.json file already exists in the output directory , do you want to merge the new updates ?',
@@ -135,10 +144,18 @@ program
   .option('-c, --theme-color <value>', translation.themeColor)
   .option('-bg, --background-color <value>', translation.backgroundColor)
   .option('-i, --icon <value>', translation.icon)
+  .option('--icon-landscape-only [value]', translation.iconLandscapeOnly, false)
+  .option('--icon-portrait-only [value]', translation.iconPortraitOnly, false)
+  .option('--icon-quality <value>', translation.iconQuality, 70)
+  .option('--icon-favicon [value]', translation.iconFavicon, true)
+  .option('--icon-maskable [value]', translation.iconMaskable, true)
+  .option('--icon-background <value>', translation.iconBackground, 'transparent')
+  .option('--icon-opaque [value]', translation.iconOpaque, true)
+  .option('--icon-padding <value>', translation.iconPadding, '10%')
   .option('-s, --silent', translation.silent)
   .option('-sw, --service-worker', translation.serviceWorker, false)
   .action(async (output, programName, options) => {
-
+    
     defaultAnswers = {
       ...defaultAnswers,
       ...{
@@ -282,10 +299,14 @@ program
     await pwaAssetGenerator.generateImages(answers.icon, iconsOutputPath, {
       scrape: false,
       splashOnly: false,
-      portraitOnly: false,
-      favicon: true,
-      mstile: true,
-      log: true,
+      landscapeOnly: toBoolean(options.iconLandscapeOnly),
+      portraitOnly: toBoolean(options.iconPortraitOnly),
+      quality: options.iconQuality,
+      favicon: toBoolean(options.iconFavicon),
+      maskable: toBoolean(options.iconMaskable),
+      background: options.iconBackground,
+      opaque: toBoolean(options.iconOpaque),
+      padding: options.iconPadding,
       manifest: manifestOutputPath,
       index: indexOutputPath,
       log: false
