@@ -1,6 +1,25 @@
 # BBj PWA
 
-BBj PWA is a node based cli to convert any DWC application to a [PWA](https://developer.mozilla.org/en-US/docs/Web/Progressive_web_apps). 
+BBjPWA is a node based cli to convert any DWC application to a [PWA](https://developer.mozilla.org/en-US/docs/Web/Progressive_web_apps). The tool can generate for you the following resources:
+
+- **Index page**: Your DWC app will be loaded through this page as an embed dwc app.
+- **web app manifest**: The `manifest.json` is necessary for the web app to be downloaded and be presented to the user similarly to a native app. The file provides information about a web application in a JSON text file
+- **Icons**: You can provide your app  icon and the tool will generate all required sizes to make the icons suitable for all.
+platforms (web , ios , android , windows , ...)
+- **Service worker**: The service worker will cache your app resources on the fly, that includes images , fonts , styles , ...
+- **Offline page**: The tool can also generate a offline page to be used when user goes offline.
+
+## Why PWA? 
+
+PWA, commonly known as a progressive web app, is a type of web applications which works both as a web app and mobile app on 
+any device. The aim of PWA is to deliver native liker user experience.
+
+- They are responsive which means they adapt to the various screen sizes desktop , mobile , .. 
+- They behave like if they were naive apps in terms of interactions. 
+- They are exposed over the HTTPS protocol so they are secure. 
+- They are installable. The user can save the app with the corresponding icon on the home screen. 
+- They are shareable. The user can share the app via URL without installation.
+- They can published on different stores (Apple Store , Google Play and Microsoft store).
 
 ## Installation
 
@@ -49,4 +68,21 @@ Options:
 If you are generating a service worker then in the enterprise manager you need to add the following custom header 
 for the `root` context.
 
-![2022-04-29 16_41_32-localhost_8888_bbjem_emapp](https://user-images.githubusercontent.com/4313420/165967424-f7c73701-57b0-4ded-8e86-0d1dd04127d9.png)
+![2](https://user-images.githubusercontent.com/4313420/177748614-bab1bb02-b74b-4c24-aaab-b65b84299cfd.png)
+
+
+## More Resources:
+
+- [What are Progressive Web Apps?](https://web.dev/what-are-pwas/)
+- [Introduction to progressive web apps](https://developer.mozilla.org/en-US/docs/Web/Progressive_web_apps/Introduction)
+- [PWA Builder](https://www.pwabuilder.com/)
+
+## Contributing
+
+Everyone is welcome to help contribute and improve this project. There are several
+ways you can contribute:
+
+* Reporting issues (please read [issue guidelines](https://github.com/necolas/issue-guidelines))
+* Suggesting new features
+* Writing or refactoring code
+* Fixing [issues](https://github.com/BasisHub/BBjPWA/issues)
