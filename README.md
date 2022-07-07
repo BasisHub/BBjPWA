@@ -71,7 +71,7 @@ Options:
   -h, --help                       display help for command
 ```
 
-## Enterprise Manager Configuration
+## EM Configuration
 
 If you are generating a service worker then in the enterprise manager you need to add the following custom header 
 for the `root` context.
