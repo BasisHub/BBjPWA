@@ -1,5 +1,14 @@
 # BBj PWA
 
+<p>
+  <a href="https://github.com/BBj-Plugins/BBjPullToRefresh/blob/master/README.md">
+    <img src="https://img.shields.io/badge/license-MIT-blue.svg" alt="BBjPullToRefresh is released under the MIT license." />
+  </a>
+  <a href="https://github.com/necolas/issue-guidelines/blob/master/CONTRIBUTING.md#pull-requests">
+    <img src="https://img.shields.io/badge/PRs-welcome-brightgreen.svg" alt="PRs welcome!" />
+  </a>
+</p>
+
 BBjPWA is a node based cli to convert any DWC application to a [PWA](https://developer.mozilla.org/en-US/docs/Web/Progressive_web_apps). The tool can generate for you the following resources:
 
 - **Index page**: Your DWC app will be loaded through this page as an embed dwc app.
