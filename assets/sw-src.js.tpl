@@ -8,7 +8,7 @@ workbox.precaching.precacheAndRoute(self.__WB_MANIFEST);
 workbox.recipes.googleFontsCache()
 workbox.recipes.staticResourceCache()
 workbox.recipes.imageCache()
-
+<% if (offlinePage) { %>
 workbox.routing.registerRoute(new workbox.routing.Route(({ request }) => {
   return request.mode === 'navigate'
 }, new workbox.strategies.NetworkOnly({
@@ -18,6 +18,7 @@ workbox.routing.registerRoute(new workbox.routing.Route(({ request }) => {
     })
   ]
 })));
+<% } %>
 
 self.addEventListener('install', () => {
   self.skipWaiting();

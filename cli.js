@@ -34,10 +34,12 @@ const translation = {
   iconPadding: 'Padding to use when image source provided (css value)',
   silent: 'Run the generate command in silent mode',
   serviceWorker: 'Generate a service worker for the application',
+  offlinePage: 'Generate an offline page. This page is displayed when the application is offline using the service worker.',
   manifestExists: 'The manifest.json file already exists in the output directory , do you want to merge the new updates ?',
   indexExists: 'The index.html file already exists in the output directory , do you want to overwrite it ?',
   offlineExists: 'The offline.html file already exists in the output directory , do you want to overwrite it ?',
   serviceWorkerExists: 'The sw.js file already exists in the output directory , do you want to overwrite it ?',
+  offlinePageExists: 'The offline.html file already exists in the output directory , do you want to overwrite it ?',
 }
 
 let defaultAnswers = {
@@ -154,8 +156,9 @@ program
   .option('--icon-padding <value>', translation.iconPadding, '10%')
   .option('-s, --silent', translation.silent)
   .option('-sw, --service-worker', translation.serviceWorker, false)
+  .option('--offline-page', translation.offlinePage, false)
   .action(async (output, programName, options) => {
-    
+
     defaultAnswers = {
       ...defaultAnswers,
       ...{
@@ -186,9 +189,7 @@ program
     // generate manifest
     const manifestInputPath = path.resolve(`${__dirname}/assets/manifest.json.tpl`);
     const manifestOutputPath = path.resolve(`${output}/manifest.json`);
-    fs.outputJsonSync(manifestOutputPath, {})
     let createManifest = true;
-    let manifest = fs.readJsonSync(manifestOutputPath);
 
     if (fs.pathExistsSync(manifestOutputPath) && !options.silent) {
       const answers = await inquirer.prompt([{
@@ -202,9 +203,13 @@ program
     }
 
     if (createManifest) {
+      if (!fs.existsSync(manifestOutputPath)) {
+        fs.outputJsonSync(manifestOutputPath, {});
+      }
+
       const manifestCompiled = _.template(fs.readFileSync(manifestInputPath, 'utf8'));
       fs.outputJsonSync(manifestOutputPath, {
-        ...manifest,
+        ...fs.readJsonSync(manifestOutputPath),
         ...JSON.parse(manifestCompiled(answers))
       }, {
         spaces: ' '
@@ -221,7 +226,7 @@ program
       const answers = await inquirer.prompt([{
         type: 'confirm',
         name: 'choice',
-        message: translation.manifestExists,
+        message: translation.indexExists,
         default: false
       }]);
 
@@ -235,28 +240,6 @@ program
         ... { serviceWorker: options.serviceWorker }
       }));
       success('generate index page');
-    }
-
-    // generate index.html
-    const offlineInputPath = path.resolve(`${__dirname}/assets/offline.html.tpl`);
-    const offlineOutputPath = path.resolve(`${output}/offline.html`);
-    let createOffline = true;
-
-    if (fs.pathExistsSync(offlineOutputPath) && !options.silent) {
-      const answers = await inquirer.prompt([{
-        type: 'confirm',
-        name: 'choice',
-        message: translation.offlineExists,
-        default: false
-      }]);
-
-      createOffline = answers.choice;
-    }
-
-    if (createOffline) {
-      const offlineCompiled = _.template(fs.readFileSync(offlineInputPath, 'utf8'));
-      fs.outputFileSync(offlineOutputPath, offlineCompiled(answers));
-      success('generate offline page');
     }
 
     // generate service worker
@@ -276,9 +259,29 @@ program
       }
 
       if (createSW) {
+
+        // generate offline.html
+        const offlineInputPath = path.resolve(`${__dirname}/assets/offline.html.tpl`);
+        const offlineOutputPath = path.resolve(`${output}/offline.html`);
+        let createOffline = options.offlinePage;
+
+        if (createOffline && fs.pathExistsSync(offlineOutputPath) && !options.silent) {
+          const answers = await inquirer.prompt([{
+            type: 'confirm',
+            name: 'choice',
+            message: translation.offlineExists,
+            default: false
+          }]);
+
+          createOffline = answers.choice;
+        }
+
         const swSrcOutputPath = path.resolve(`${output}/sw-src.js`);
         const swSrcCompiled = _.template(fs.readFileSync(swSrcInputPath, 'utf8'));
-        fs.outputFileSync(swSrcOutputPath, swSrcCompiled(answers));
+        fs.outputFileSync(swSrcOutputPath, swSrcCompiled({
+          ...answers,
+          ... { offlinePage: createOffline }
+        }));
 
         await workboxBuild.injectManifest({
           globDirectory: output,
@@ -291,6 +294,12 @@ program
 
         fs.removeSync(swSrcOutputPath);
         success('generate service worker');
+
+        if (createOffline) {
+          const offlineCompiled = _.template(fs.readFileSync(offlineInputPath, 'utf8'));
+          fs.outputFileSync(offlineOutputPath, offlineCompiled(answers));
+          success('generate offline page');
+        }
       }
     }
 
