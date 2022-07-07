@@ -73,11 +73,16 @@ Options:
 
 ## EM Configurations
 
-If you are generating a service worker then in the enterprise manager you need to add the following custom header 
-for the `root` context.
+If you are generating the service worker then in the enterprise manager you need to add the following custom header 
+in the `root` context.
 
-![2](https://user-images.githubusercontent.com/4313420/177748614-bab1bb02-b74b-4c24-aaab-b65b84299cfd.png)
+* Log in to the EM
+* Navigate to `Web -> Context Configuration`
+* Select the `root` context
+* Add new HTTP header in the `Custom HTTP headers` section. 
 
+      Name: `service-worker-allowed`
+      Value: `/`
 
 ## More Resources:
 
