@@ -17,6 +17,10 @@ BBjPWA is a node based cli to convert any DWC application to a [PWA](https://dev
 - **Service worker**: The service worker will cache your app resources on the fly, that includes images , styles , ...
 - **Offline page**: The tool can also generate a offline page to be used when user goes offline.
 
+
+https://user-images.githubusercontent.com/4313420/177752115-a431d3bd-83a4-49cc-bf01-6e61a7f40712.mp4
+
+
 ## Why PWA? 
 
 PWA, commonly known as a progressive web app, is a type of web applications which works both as a web app and mobile app on 
