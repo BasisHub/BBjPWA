@@ -4,8 +4,7 @@ BBjPWA is a node based cli to convert any DWC application to a [PWA](https://dev
 
 - **Index page**: Your DWC app will be loaded through this page as an embed dwc app.
 - **web app manifest**: The `manifest.json` is necessary for the web app to be downloaded and be presented to the user similarly to a native app. The file provides information about a web application in a JSON text file
-- **Icons**: You can provide your app  icon and the tool will generate all required sizes to make the icons suitable for all.
-platforms (web , ios , android , windows , ...)
+- **Icons**: You can provide your app  icon and the tool will generate all required sizes to make the icons suitable for all platforms.
 - **Service worker**: The service worker will cache your app resources on the fly, that includes images , styles , ...
 - **Offline page**: The tool can also generate a offline page to be used when user goes offline.
 
