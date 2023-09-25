@@ -85,8 +85,8 @@ in the `root` context.
 * Select the `root` context
 * Add new HTTP header in the `Custom HTTP headers` section. 
 
-      Name: `service-worker-allowed`
-      Value: `/`
+      Name: service-worker-allowed
+      Value: /
 
 ## More Resources:
 
