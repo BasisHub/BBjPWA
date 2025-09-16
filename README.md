@@ -47,7 +47,7 @@ npm install -g BasisHub/BBjPWA
 ## Interface 
 
 ```
-Usage: cli [options] <output> <program-name>
+Usage: bbj-pwa [options] <output> <program-name>
 
 Arguments:
   output                           The output directory where the files will be generated
